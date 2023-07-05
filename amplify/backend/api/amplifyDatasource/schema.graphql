@@ -1,0 +1,227 @@
+type PaymentMethod @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  type: String
+  cardNumber: String
+  expirationDate: AWSDate
+  cvv: String
+  userID: ID! @index(name: "byUser")
+  User: User @belongsTo(fields: ["userID"])
+  Order: Order @belongsTo
+}
+
+type ShippingAddress @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  firstName: String
+  lastName: String
+  email: String
+  phone: AWSPhone
+  address: String
+  subAddress: String
+  city: String
+  state: String
+  zipCode: String
+  country: String
+  userID: ID! @index(name: "byUser")
+  User: User @belongsTo(fields: ["userID"])
+  Location: Location @hasOne
+  Order: Order @belongsTo
+}
+
+type BillingAddress @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  firstName: String
+  lastName: String
+  email: String
+  Phone: AWSPhone
+  isTheSameAsShipping: Boolean
+  User: User @belongsTo
+  Location: Location @hasOne
+  address: String
+  subAddress: String
+  city: String
+  state: String
+  zipCode: String
+  country: String
+  Order: Order @belongsTo
+}
+
+type DetailsJson {
+  key: String
+  value: String
+}
+
+type Location @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  lat: Float
+  lng: Float
+  ShippingClass: ShippingClass @belongsTo
+  BillingAddress: BillingAddress @belongsTo
+  User: User @belongsTo
+  ShippingAddress: ShippingAddress @belongsTo
+}
+
+type ShippingRate @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  minWeight: Float
+  maxWeight: Float
+  rate: Float
+  shippingclassID: ID! @index(name: "byShippingClass")
+  ShippingClass: ShippingClass @belongsTo(fields: ["shippingclassID"])
+}
+
+type ShippingClass @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  description: String
+  Products: [Product] @hasMany(indexName: "byShippingClass", fields: ["id"])
+  ShippingRates: [ShippingRate] @hasMany(indexName: "byShippingClass", fields: ["id"])
+  Location: Location @hasOne
+}
+
+type Prototype @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  categoryID: ID @index(name: "byCategory")
+  OptionTypes: [OptionType] @hasMany(indexName: "byPrototype", fields: ["id"])
+  Products: [Product] @hasMany(indexName: "byPrototype", fields: ["id"])
+}
+
+enum OrderStatus {
+  NEW
+  READY_FOR_PICKUP
+  PICKED_UP
+  COMPLETED
+  ACCEPTED
+}
+
+type SubCategory @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String
+  Products: [Product] @hasMany(indexName: "bySubCategory", fields: ["id"])
+  categoryID: ID! @index(name: "byCategory")
+  OptionTypes: [OptionType] @manyToMany(relationName: "SubCategoryOptionType")
+}
+
+type ProductType @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Products: [Product] @hasMany(indexName: "byProductType", fields: ["id"])
+  Categories: [Category] @hasMany(indexName: "byProductType", fields: ["id"])
+  name: String!
+}
+
+type Brand @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  Products: [Product] @hasMany(indexName: "byBrand", fields: ["id"])
+  logo: String
+}
+
+type OptionValue @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  optiontypeID: ID @index(name: "byOptionType")
+  opttionType: OptionType @belongsTo(fields: ["optiontypeID"])
+}
+
+enum PurposeEnum {
+  VARIANT
+  FEATURE
+  PRODUCT_DETAILS_TEXT
+  PRODUCT_DETAILS_SELECT
+}
+
+type OptionType @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  value: String
+  placeholder: String
+  category: PurposeEnum
+  subcategorys: [SubCategory] @manyToMany(relationName: "SubCategoryOptionType")
+  OptionValues: [OptionValue] @hasMany(indexName: "byOptionType", fields: ["id"])
+  prototypeID: ID @index(name: "byPrototype")
+  Prototype: Prototype @belongsTo(fields: ["prototypeID"])
+}
+
+type Category @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  description: String
+  image: String
+  Products: [Product] @hasMany(indexName: "byCategory", fields: ["id"])
+  producttypeID: ID! @index(name: "byProductType")
+  SubCategories: [SubCategory] @hasMany(indexName: "byCategory", fields: ["id"])
+  Prototypes: [Prototype] @hasMany(indexName: "byCategory", fields: ["id"])
+}
+
+type BagProduct @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  userSub: String!
+  quantity: Int!
+  productID: ID!
+  product: Product @hasOne(fields: ["productID"])
+}
+
+type OrderProduct @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  quantity: Int!
+  productID: ID!
+  product: Product @hasOne(fields: ["productID"])
+  orderID: ID!
+  order: Order @hasOne(fields: ["orderID"])
+}
+
+type Order @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  status: OrderStatus
+  userSub: String!
+  ShippingAddress: ShippingAddress @hasOne
+  BillingAddress: BillingAddress @hasOne
+  PaymentMethod: PaymentMethod @hasOne
+  completed: Boolean
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  email: String!
+  firstName: String
+  lastName: String
+  sub: String
+  phone: AWSPhone
+  BillingAddress: BillingAddress @hasOne
+  Location: Location @hasOne
+  ShippinAddresses: [ShippingAddress] @hasMany(indexName: "byUser", fields: ["id"])
+  PaymentMethods: [PaymentMethod] @hasMany(indexName: "byUser", fields: ["id"])
+}
+
+type Product @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  count: Int!
+  about: String!
+  images: [String!]
+  rating: Float
+  price: Float!
+  mockPrice: Float
+  wholesalePromoPrice: Float
+  features: [String]
+  published: Boolean
+  model: String
+  isFeatured: Boolean
+  isPromoted: Boolean
+  categoryID: ID! @index(name: "byCategory")
+  Category: Category @belongsTo(fields: ["categoryID"])
+  brandID: ID! @index(name: "byBrand")
+  Brand: Brand @belongsTo(fields: ["brandID"])
+  producttypeID: ID! @index(name: "byProductType")
+  subcategoryID: ID! @index(name: "bySubCategory")
+  prototypeID: ID @index(name: "byPrototype")
+  Prototype: Prototype @belongsTo(fields: ["prototypeID"])
+  ProductType: ProductType @belongsTo(fields: ["producttypeID"])
+  SubCategory: SubCategory @belongsTo(fields: ["subcategoryID"])
+  promoPrice: Float
+  shippingclassID: ID @index(name: "byShippingClass")
+  ShippingClass: ShippingClass @belongsTo(fields: ["shippingclassID"])
+  details: AWSJSON!
+}
+ 

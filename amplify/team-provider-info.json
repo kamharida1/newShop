@@ -1,0 +1,23 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-openshop-dev-03443-authRole",
+      "UnauthRoleArn": "arn:aws:iam::083385831257:role/amplify-openshop-dev-03443-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::083385831257:role/amplify-openshop-dev-03443-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-openshop-dev-03443-deployment",
+      "UnauthRoleName": "amplify-openshop-dev-03443-unauthRole",
+      "StackName": "amplify-openshop-dev-03443",
+      "StackId": "arn:aws:cloudformation:us-east-2:083385831257:stack/amplify-openshop-dev-03443/992fcf20-ec66-11ed-8370-02d3e7d010c5",
+      "AmplifyAppId": "d2v43s4fty4f7p"
+    },
+    "categories": {
+      "auth": {
+        "openshopa1935546": {}
+      },
+      "api": {
+        "amplifyDatasource": {}
+      }
+    }
+  }
+}
