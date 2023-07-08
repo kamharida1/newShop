@@ -1706,7 +1706,7 @@ export const schema = {
                     "name": "productID",
                     "isArray": false,
                     "type": "ID",
-                    "isRequired": true,
+                    "isRequired": false,
                     "attributes": []
                 },
                 "product": {
@@ -1818,8 +1818,8 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
-                "order": {
-                    "name": "order",
+                "Order": {
+                    "name": "Order",
                     "isArray": false,
                     "type": {
                         "model": "Order"
@@ -1965,6 +1965,21 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "OrderProduct": {
+                    "name": "OrderProduct",
+                    "isArray": false,
+                    "type": {
+                        "model": "OrderProduct"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "orderOrderProductId"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1997,6 +2012,13 @@ export const schema = {
                 },
                 "orderPaymentMethodId": {
                     "name": "orderPaymentMethodId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "orderOrderProductId": {
+                    "name": "orderOrderProductId",
                     "isArray": false,
                     "type": "ID",
                     "isRequired": false,
@@ -2446,6 +2468,36 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "BagProduct": {
+                    "name": "BagProduct",
+                    "isArray": false,
+                    "type": {
+                        "model": "BagProduct"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "productBagProductId"
+                        ]
+                    }
+                },
+                "OrderProduct": {
+                    "name": "OrderProduct",
+                    "isArray": false,
+                    "type": {
+                        "model": "OrderProduct"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "association": {
+                        "connectionType": "BELONGS_TO",
+                        "targetNames": [
+                            "productOrderProductId"
+                        ]
+                    }
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -2461,6 +2513,20 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "isReadOnly": true
+                },
+                "productBagProductId": {
+                    "name": "productBagProductId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "productOrderProductId": {
+                    "name": "productOrderProductId",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": false,
+                    "attributes": []
                 }
             },
             "syncable": true,
@@ -2684,5 +2750,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "71ef8c79047a31a26cca02abaf258f4e"
+    "version": "153c07e6653148a40736922a3133b7a4"
 };

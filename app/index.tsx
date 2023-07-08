@@ -1,5 +1,5 @@
 import "@azure/core-asynciterator-polyfill";
-import { StyleSheet, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import tw from "twrnc";
 import ItemCard from "../etc/cards/item_card";
@@ -14,6 +14,7 @@ import HomeSvg from '../assets/icons/home-svgrepo-com.svg'
 import awsExports from "../src/aws-exports";
 import { Easing } from "react-native-reanimated";
 import { useFocusEffect, useRouter } from "expo-router";
+import { Space } from "../etc/space/re_space";
 
 Amplify.configure(awsExports);
 
@@ -44,37 +45,19 @@ const Home = () => {
         );
       } else {
         // console.warn("User already exists in DB")
-        router.replace("/tabs/home");
+        // return
+        router.replace("tabs/home");  
       }
     };
-
     saveUserToDB();
   });
 
-  // useEffect(() => {
-  //   fetchProducts();
-  // }, []);
-
-  // const fetchProducts = async () => {
-  //   try {
-  //     const fetchedProducts = await DataStore.query(Product);
-  //     setProducts(fetchedProducts);
-  //   } catch (error) {
-  //     console.log("Error fetching products:", error);
-  //   }
-  // };
-
-  // const renderProductItem = ({ item }: any) => {
-  //   return (
-  //     <View>
-  //       <Text>{item.name}</Text>
-  //       <Text>{item.price}</Text>
-  //     </View>
-  //   );
-  // };
-
   return (
-   <View style={tw`flex-1 items-center justify-center`}><Text style={tw`text-xl text-rose-500`}>Enter</Text></View>
+    <View style={tw`flex-1 items-center justify-center`}>
+      <Button title="Tabs" onPress={() => router.push('tabs/home')} />
+      <Space />
+      <Button title="Products" onPress={() => router.push('products')} />
+   </View>
   );
 };
 

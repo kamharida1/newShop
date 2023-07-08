@@ -15,15 +15,15 @@ export default function ImageModal(props: Props) {
   let { activeIndex, images, isVisible, setVisible } = props;
   let imagesUrls = images?.map((url) => ({ url }));
 
-  let renderHeader = () => (
-    <RoundIconButton
-      name={"skip-back"}
-      color={"mainBackground"}
-      size={35}
-      onPress={() => setVisible(false)}
-      style={styles.headerIcon}
-    />
-  );
+  // let renderHeader = () => (
+  //   <RoundIconButton
+  //     name={"skip-back"}
+  //     color={"mainBackground"}
+  //     size={35}
+  //     onPress={() => setVisible(false)}
+  //     style={styles.headerIcon}
+  //   />
+  // );
 
   return (
     <Modal
@@ -36,7 +36,7 @@ export default function ImageModal(props: Props) {
         imageUrls={imagesUrls}
         enableSwipeDown
         onSwipeDown={() => setVisible(false)}
-        renderHeader={renderHeader}
+        //renderHeader={renderHeader}
         useNativeDriver={true}
       />
     </Modal>

@@ -2,7 +2,7 @@ import "react-native-reanimated";
 import "react-native-gesture-handler";
 import { DataStore } from "aws-amplify";
 import { RootSiblingParent } from "react-native-root-siblings";
-
+import { ThemeProvider } from "../etc/_Theme";
 import { Stack } from "expo-router";
 import { ExpoSQLiteAdapter } from "@aws-amplify/datastore-storage-adapter/ExpoSQLiteAdapter";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -27,27 +27,29 @@ export default function RootLayout() {
     <AmplifyProvider>
       <Authenticator.Provider>
         <RootSiblingParent>
-          <Authenticator
-            Container={(props) => (
-              // reuse default `Container` and apply custom background
-              <Authenticator.Container
-                {...props}
-                //style={{ backgroundColor: "pink" }}
-              />
-            )}
-            //components={{SignIn: Login}}
-          >
-            <SafeAreaProvider>
-              <Stack screenOptions={{ headerShown: false }}>
-                <Stack.Screen
-                  name="index"
-                  options={{
-                    title: "Welcome",
-                  }}
+          <ThemeProvider>
+            <Authenticator
+              Container={(props) => (
+                // reuse default `Container` and apply custom background
+                <Authenticator.Container
+                  {...props}
+                  //style={{ backgroundColor: "pink" }}
                 />
-              </Stack>
-            </SafeAreaProvider>
-          </Authenticator>
+              )}
+              //components={{SignIn: Login}}
+            >
+              <SafeAreaProvider>
+                <Stack screenOptions={{ headerShown: false }}>
+                  <Stack.Screen
+                    name="index"
+                    options={{
+                      title: "Welcome",
+                    }}
+                  />
+                </Stack>
+              </SafeAreaProvider>
+            </Authenticator>
+          </ThemeProvider>
         </RootSiblingParent>
       </Authenticator.Provider>
     </AmplifyProvider>

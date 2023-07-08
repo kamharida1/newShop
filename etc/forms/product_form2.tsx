@@ -2,7 +2,6 @@ import { FC, useEffect, useState } from "react";
 import {
   Brand,
   Category,
-  LazyProduct,
   OptionType,
   Product,
   ProductType,
@@ -10,7 +9,7 @@ import {
 } from "../../src/models";
 import * as ImagePicker from "expo-image-picker";
 import { Image, Text, View } from "@bacons/react-views";
-import { Button as NativeButton } from "react-native";
+import { Alert, Button as NativeButton } from "react-native";
 import tw from 'twrnc'
 
 import DropdownComponent from "./dropdown";
@@ -60,9 +59,6 @@ const ProductForm2: FC<ProductFormT> = ({
   const [categoryID, setCategoryID] = useState("");
   const [brandID, setBrandID] = useState("");
   const [producttypeID, setProducttypeID] = useState("");
-  // const [prototypeID, setPrototypeID] = useState("");
-  // const [shippingclassID, setShippingclassID] = useState("");
-  // const [optionValues, setOptionValues] = useState<OptionValue[]>([]);
 
   const { data, create } = useDataStore(Product);
   
@@ -152,7 +148,7 @@ const ProductForm2: FC<ProductFormT> = ({
     if (!result.canceled) {
       setImages(result.assets.map(({ uri })=> uri));
     } else {
-      alert("You did not select any image.");
+      Alert.alert("You did not select any image.");
     }
   };
 

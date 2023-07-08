@@ -33,8 +33,10 @@ const Products = () => {
   );
 
   return (
-    <SafeAreaView style={tw`flex-1`}>
-      <Stack.Screen options={{ title: "Cats" }} />
+    <View style={tw`flex-1`}>
+      <Stack.Screen options={{
+        title: "Home",
+      }} />
       <>
         <FlatList
           contentInsetAdjustmentBehavior="automatic"
@@ -48,7 +50,7 @@ const Products = () => {
           contentContainerStyle={{ flexGrow: 1, paddingBottom: 40 }}
         />
       </>
-    </SafeAreaView>
+    </View>
   );
 };
 

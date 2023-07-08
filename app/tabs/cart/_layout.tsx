@@ -1,6 +1,13 @@
 import { Stack } from "expo-router";
 
-const Layout = () => {
-  return <Stack screenOptions={{ headerShown: false }} />;
+const CartLayout = () => {
+  return (
+    <Stack
+      screenOptions={{
+        headerTransparent: true,
+        headerBlurEffect: "systemMaterialLight",
+      }}
+    />
+  );
 };
-export default Layout;
+export default CartLayout;

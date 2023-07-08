@@ -567,7 +567,7 @@ type EagerBagProduct = {
   readonly id: string;
   readonly userSub: string;
   readonly quantity: number;
-  readonly productID: string;
+  readonly productID?: string | null;
   readonly product?: Product | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -581,7 +581,7 @@ type LazyBagProduct = {
   readonly id: string;
   readonly userSub: string;
   readonly quantity: number;
-  readonly productID: string;
+  readonly productID?: string | null;
   readonly product: AsyncItem<Product | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -603,7 +603,7 @@ type EagerOrderProduct = {
   readonly productID: string;
   readonly product?: Product | null;
   readonly orderID: string;
-  readonly order?: Order | null;
+  readonly Order?: Order | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -618,7 +618,7 @@ type LazyOrderProduct = {
   readonly productID: string;
   readonly product: AsyncItem<Product | undefined>;
   readonly orderID: string;
-  readonly order: AsyncItem<Order | undefined>;
+  readonly Order: AsyncItem<Order | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -641,11 +641,13 @@ type EagerOrder = {
   readonly BillingAddress?: BillingAddress | null;
   readonly PaymentMethod?: PaymentMethod | null;
   readonly completed?: boolean | null;
+  readonly OrderProduct?: OrderProduct | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly orderShippingAddressId?: string | null;
   readonly orderBillingAddressId?: string | null;
   readonly orderPaymentMethodId?: string | null;
+  readonly orderOrderProductId?: string | null;
 }
 
 type LazyOrder = {
@@ -660,11 +662,13 @@ type LazyOrder = {
   readonly BillingAddress: AsyncItem<BillingAddress | undefined>;
   readonly PaymentMethod: AsyncItem<PaymentMethod | undefined>;
   readonly completed?: boolean | null;
+  readonly OrderProduct: AsyncItem<OrderProduct | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly orderShippingAddressId?: string | null;
   readonly orderBillingAddressId?: string | null;
   readonly orderPaymentMethodId?: string | null;
+  readonly orderOrderProductId?: string | null;
 }
 
 export declare type Order = LazyLoading extends LazyLoadingDisabled ? EagerOrder : LazyOrder
@@ -754,8 +758,12 @@ type EagerProduct = {
   readonly shippingclassID?: string | null;
   readonly ShippingClass?: ShippingClass | null;
   readonly details: string;
+  readonly BagProduct?: BagProduct | null;
+  readonly OrderProduct?: OrderProduct | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly productBagProductId?: string | null;
+  readonly productOrderProductId?: string | null;
 }
 
 type LazyProduct = {
@@ -791,8 +799,12 @@ type LazyProduct = {
   readonly shippingclassID?: string | null;
   readonly ShippingClass: AsyncItem<ShippingClass | undefined>;
   readonly details: string;
+  readonly BagProduct: AsyncItem<BagProduct | undefined>;
+  readonly OrderProduct: AsyncItem<OrderProduct | undefined>;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
+  readonly productBagProductId?: string | null;
+  readonly productOrderProductId?: string | null;
 }
 
 export declare type Product = LazyLoading extends LazyLoadingDisabled ? EagerProduct : LazyProduct

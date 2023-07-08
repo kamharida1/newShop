@@ -9,6 +9,9 @@ import { Box } from "../../../etc/_Theme";
 import tw from 'twrnc'
 import ImageModal from "../../../etc/modals/image_modal";
 import { Auth, DataStore } from "aws-amplify";
+import { BlurView } from "expo-blur";
+import QuantitySelector from "../../../etc/misc/quantity_selector";
+import { formatCurrency } from "../../../src/utils";
 
 const ProductDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -43,14 +46,14 @@ const ProductDetail = () => {
     const newBagProduct = new BagProduct({
       userSub: userData.attributes.sub,
       quantity,
-      productID: product.id
+      productID: product.id,
     });
 
     await DataStore.save(newBagProduct)
     router.push('tabs/cart')
   }
 
-  if (isLoading) {
+  if (isLoading && !product) {
     return (
         <Text>Loading...</Text>
     );
@@ -63,9 +66,9 @@ const ProductDetail = () => {
           title: `${product?.name}`,
         }}
       />
-      <Screen style={{ paddingHorizontal: 2 }} scroll>
+      <Screen style={tw`flex-1 bg-transparent`} scroll>
         <ImageCarousel onImagePress={handleImagePress} product={product} />
-        <Box>
+        <View style={tw`flex-1 bg-transparent p-4`}>
           <Box
             flexDirection="row"
             alignItems="center"
@@ -76,7 +79,7 @@ const ProductDetail = () => {
               {product?.name}
             </Text>
             <Text style={tw`font-medium text-2xl text-slate-700`}>
-              ${product?.price}
+              {`${"\u20A6"}`} {product?.price}
             </Text>
           </Box>
           <Text
@@ -88,8 +91,11 @@ const ProductDetail = () => {
             {product?.about}
           </Text>
           <Button title="Add to Cart" onPress={onAddToBag} />
-          {/* <Button title="Go to Cart" onPress={() => router.push("/cart")} /> */}
-        </Box>
+          <Button title="Go to Cart" onPress={() => router.push("tabs/cart")} />
+          <View style={tw`self-center`}>
+            <QuantitySelector quantity={quantity} setQuantity={setQuantity} />
+          </View>
+        </View>
         <ImageModal
           activeIndex={activeIndex}
           images={product?.images}
@@ -102,16 +108,14 @@ const ProductDetail = () => {
 };
 
 const styles = StyleSheet.create({
-  name: {
-    fontSize: 20,
-    fontWeight: "bold",
-    textAlign: "center",
-    margin: 10,
+  container: {
+    // flex:1,
+    width: "100%",
+    height: 250,
+    zIndex: 1
   },
-  text: {
-    fontSize: 16,
-    textAlign: "center",
-    margin: 10,
+  blur: {
+    ...StyleSheet.absoluteFillObject,
   },
 });
 

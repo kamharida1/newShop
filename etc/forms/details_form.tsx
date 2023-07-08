@@ -5,8 +5,6 @@ import { Box } from "../_Theme";
 import TextInput from "./text_input";
 import RNPickerSelect from "react-native-picker-select";
 import { View } from "@bacons/react-views";
-import DropdownComponent from "./dropdown";
-
 
 interface DetailsT {
   opt: OptionType;
@@ -39,6 +37,7 @@ export default function DetailsForm(props: DetailsT) {
   }, []);
 
   let displayComponent;
+  
   switch (opt.category) {
     case "PRODUCT_DETAILS_TEXT":
       displayComponent = (
