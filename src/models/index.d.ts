@@ -91,6 +91,7 @@ type EagerShippingAddress = {
   readonly state?: string | null;
   readonly zipCode?: string | null;
   readonly country?: string | null;
+  readonly selected?: boolean | null;
   readonly userID: string;
   readonly User?: User | null;
   readonly Location?: Location | null;
@@ -117,6 +118,7 @@ type LazyShippingAddress = {
   readonly state?: string | null;
   readonly zipCode?: string | null;
   readonly country?: string | null;
+  readonly selected?: boolean | null;
   readonly userID: string;
   readonly User: AsyncItem<User | undefined>;
   readonly Location: AsyncItem<Location | undefined>;

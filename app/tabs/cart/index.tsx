@@ -107,7 +107,7 @@ export default function Cart() {
   }, [bagProducts]);
 
   const onCheckout = () => {
-    router.push({ pathname: 'order/checkout', params: { totalPrice } });
+    router.push({ pathname: 'order/add_address', params: { totalPrice } });
   };
 
   if (bagProducts.filter((bp) => !bp.product).length !== 0) {
@@ -117,7 +117,7 @@ export default function Cart() {
   return (
     <SafeAreaView style={tw`flex-1`}>
       <Stack.Screen options={{ title: "Cart" }} />
-      <View style={tw`flex-1 p-2 pt-13`}>
+      <Screen style={tw`pt-25`}>
         <FlatList
           data={bagProducts}
           renderItem={({ item }) => <Text>{item.productID}</Text>}
@@ -128,14 +128,14 @@ export default function Cart() {
                 Subtotal ({bagProducts.length} items):{" "}
                 <Text style={{ color: "#e47911", fontWeight: "bold" }}>
                   {/* {`${"\u20A6"}`} */}
-                {formatCurrency(totalPrice)}
+                  {formatCurrency(totalPrice)}
                 </Text>
               </Text>
               <Button title="Proceed to checkout" onPress={onCheckout} />
             </View>
           )}
         />
-      </View>
+      </Screen>
     </SafeAreaView>
   );
 }

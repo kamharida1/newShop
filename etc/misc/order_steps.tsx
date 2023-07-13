@@ -9,14 +9,14 @@ const secondIndicatorStyles = {
   currentStepIndicatorSize: 40,
   separatorStrokeWidth: 2,
   currentStepStrokeWidth: 1,
-  stepStrokeCurrentColor: '#34c759',
+  stepStrokeCurrentColor: "#34c759",
   stepStrokeWidth: 1,
   separatorStrokeFinishedWidth: 1,
   stepStrokeFinishedColor: "#ffffff",
-  stepStrokeUnFinishedColor: Colors.lighter_green,
-  separatorFinishedColor: Colors.lighter_green,
-  separatorUnFinishedColor: Colors.lighter_green,
-  stepIndicatorFinishedColor: Colors.lighter_green,
+  stepStrokeUnFinishedColor: "#34c759",
+  separatorFinishedColor: "#34c759",
+  separatorUnFinishedColor: "#34c759",
+  stepIndicatorFinishedColor: "#34c759",
   stepIndicatorUnFinishedColor: "#ffffff",
   stepIndicatorCurrentColor: "#ffffff",
 };
@@ -24,7 +24,7 @@ const secondIndicatorStyles = {
 const getStepIndicatorIconConfig = ({ position, stepStatus }) => {
   const iconConfig = {
     name: "feed",
-    color: stepStatus === "finished" ? "#ffffff" : Colors.lighter_green,
+    color: stepStatus === "finished" ? "#ffffff" : "#34c759",
     size: 14,
   };
   switch (position) {
@@ -61,7 +61,7 @@ const OrderSteps = (props) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.stepIndicator}>
+      <View style={{}}>
         <StepIndicator
           customStyles={secondIndicatorStyles}
           stepCount={4}

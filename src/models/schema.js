@@ -174,7 +174,7 @@ export const schema = {
                 "phone": {
                     "name": "phone",
                     "isArray": false,
-                    "type": "AWSPhone",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -217,6 +217,13 @@ export const schema = {
                     "name": "country",
                     "isArray": false,
                     "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "selected": {
+                    "name": "selected",
+                    "isArray": false,
+                    "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -374,7 +381,7 @@ export const schema = {
                 "Phone": {
                     "name": "Phone",
                     "isArray": false,
-                    "type": "AWSPhone",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -2750,5 +2757,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "153c07e6653148a40736922a3133b7a4"
+    "version": "dcacc98a5a517c7e5d9465b38bbb8e43"
 };

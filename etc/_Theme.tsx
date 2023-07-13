@@ -13,38 +13,42 @@ import {
 } from "@shopify/restyle";
 
 const palette = {
-  purpleLight: "#8C6FF7",
-  purplePrimary: "#5A31F4",
-  purpleDark: "#3F22AB",
-  borderOnDark: "rgba(80,83,86, 1)",
-
-  greenLight: "#56DCBA",
-  greenPrimary: "#0ECD9D",
-  greenDark: "#0A906E",
-
-  black: "#0B0B0B",
-  white: "#F0F2F3",
-  white2: "#FFF",
-  primary: "#FF0045",
-
-  lightGray: "#2B1B17",
-  darkPink: "#FF0058",
+  red: "rgb(255, 59, 48, 0.9)",
+  orange: "rgb(255,149, 0)",
+  yellow: "rgb(255,204,0)",
+  green: "rgb(52,199,89)",
+  mint: "rgb(0,199,190)",
+  teal: "rgb(48,176,199)",
+  cyan: "rgb(50,173,230)",
+  blue: "rgb(0,122,255)",
+  indigo: "rgb(88,86,214)",
+  pink: "rgb(255,45,85)",
+  purple: "rgb(175,82,222)",
+  brown: "rgb(162,132,94)",
+  gray: "rgb(142,142,147)",
+  gray2: "rgb(174,174,178)",
+  gray3: "rgb(199,199,204)",
+  gray4: "rgb(209,209,214)",
+  gray5: "rgb(229,229,234)",
+  gray6: "rgb(242,242,247)",
+  semiBlack: "rgb(100,100,100)",
+  black: "rgb(0,0,0)",
+  white: "rgb(255,255,255)"
 };
 
 export const theme = createTheme({
   colors: {
-    mainBackground: palette.white,
+    mainBackground: palette.gray6,
     mainForeground: palette.black,
-    foregroundSubdued: palette.borderOnDark,
-    cardPrimaryBackground: palette.purplePrimary,
-    buttonPrimary: palette.purpleLight,
-    primary: palette.primary,
-    buttonBackground: palette.lightGray,
-    buttonbackground2: palette.purplePrimary,
-    danger: palette.darkPink,
+    cardPrimaryBackground: palette.white,
+    buttonPrimary: palette.orange,
+    primary: palette.red,
+    buttonBackground: palette.gray2,
+    buttonbackground2: palette.orange,
+    danger: palette.pink,
     body: palette.black,
-    subBody: "rgba(140, 145, 150, 1)",
-    success: palette.greenPrimary
+    subBody: palette.semiBlack,
+    success: palette.green
   },
   cardVariants: {
     defaults: {
@@ -101,7 +105,7 @@ export const theme = createTheme({
       fontWeight: "600",
       fontSize: 28,
       lineHeight: 36,
-      color: "foregroundSubdued",
+      color: "subBody",
     },
     body: {
       //fontFamily: "ShopifySans",

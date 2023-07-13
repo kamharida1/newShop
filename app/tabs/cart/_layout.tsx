@@ -6,6 +6,9 @@ const CartLayout = () => {
       screenOptions={{
         headerTransparent: true,
         headerBlurEffect: "systemMaterialLight",
+        headerLargeTitle: true,
+        headerBackVisible: true,
+        headerBackTitleVisible: true,
       }}
     />
   );

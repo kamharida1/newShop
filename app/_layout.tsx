@@ -12,6 +12,8 @@ import {
   Theme,
   defaultDarkModeOverride,
 } from "@aws-amplify/ui-react-native";
+import { PaperProvider } from "react-native-paper";
+
 
 DataStore.configure({
   storageAdapter: ExpoSQLiteAdapter,
@@ -38,16 +40,18 @@ export default function RootLayout() {
               )}
               //components={{SignIn: Login}}
             >
-              <SafeAreaProvider>
-                <Stack screenOptions={{ headerShown: false }}>
-                  <Stack.Screen
-                    name="index"
-                    options={{
-                      title: "Welcome",
-                    }}
-                  />
-                </Stack>
-              </SafeAreaProvider>
+              <PaperProvider>
+                <SafeAreaProvider>
+                  <Stack screenOptions={{ headerShown: false }}>
+                    <Stack.Screen
+                      name="index"
+                      options={{
+                        title: "Welcome",
+                      }}
+                    />
+                  </Stack>
+                </SafeAreaProvider>
+              </PaperProvider>
             </Authenticator>
           </ThemeProvider>
         </RootSiblingParent>

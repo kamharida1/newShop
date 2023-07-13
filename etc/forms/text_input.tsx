@@ -32,7 +32,7 @@ const TextInput = forwardRef<RNTextInput, TextInputProps>(
   ) => {
     const theme = useTheme();
     const SIZE = theme.borderRadii.m * 2; // 10 x 2 = 20
-    const color = !touched ? "body" : error ? "danger" : "success";
+    const color = !touched ? "mainForeground" : error ? "danger" : "success";
     const themeColor = theme.colors[color];
 
     return (

@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, Text, View } from "react-native";
+import { Platform, StyleSheet, Text, View, ViewStyle } from "react-native";
 import React from "react";
 
 import {
@@ -10,18 +10,20 @@ import {
 
 interface Props {
   children: JSX.Element | JSX.Element[];
+  style?: ViewStyle
 }
 
-const KeyboardAvoidingWrapper: React.FC<Props> = ({ children }) => {
+const KeyboardAvoidingWrapper: React.FC<Props> = ({ children, style}) => {
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, style]}
       behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         contentContainerStyle={styles.contentContainer}
+        scrollEventThrottle={16}
       >
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           {children}
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flexGrow: 1,
-    justifyContent: 'center',
-    paddingHorizontal: 16
+    //alignItems: 'center',
+    paddingHorizontal: 16,
   }
 });
