@@ -1,25 +1,17 @@
 import "@azure/core-asynciterator-polyfill";
-import { Button, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
+import { Button, View } from "react-native";
 import tw from "twrnc";
-import ItemCard from "../etc/cards/item_card";
 
-import { Product, User } from "../src/models";
+import {  User } from "../src/models";
 import { Amplify, Auth, DataStore } from "aws-amplify";
-import { FlatList } from "react-native-gesture-handler";
-import HomeSvg from '../assets/icons/home-svgrepo-com.svg'
-
-  import { MotiView } from "moti";
 
 import awsExports from "../src/aws-exports";
-import { Easing } from "react-native-reanimated";
 import { useFocusEffect, useRouter } from "expo-router";
 import { Space } from "../etc/space/re_space";
 
 Amplify.configure(awsExports);
 
 const Home = () => {
-  // const [products, setProducts] = useState<Product[]>([]);
 
   const router = useRouter();
 
@@ -45,8 +37,8 @@ const Home = () => {
         );
       } else {
         // console.warn("User already exists in DB")
-        // return
-        router.replace("tabs/home");  
+        return
+        //router.replace("tabs/home");  
       }
     };
     saveUserToDB();

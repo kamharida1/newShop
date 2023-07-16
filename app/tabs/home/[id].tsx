@@ -15,6 +15,8 @@ import { formatCurrency } from "../../../src/utils";
 
 const ProductDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [bagProducts, setBagProducts] = useState<BagProduct[]>([]);
+
   const [product, setProduct] = useState<Product | undefined>(undefined);
   const [quantity, setQuantity] = useState(1);
 
@@ -28,7 +30,22 @@ const ProductDetail = () => {
     if (!id) return
     DataStore.query(Product, id).then(setProduct);
     setIsLoading(false)
-  },[id])
+  }, [id]);
+
+  const fetchBagProducts = async () => {
+    try {
+      const userData = await Auth.currentAuthenticatedUser();
+      DataStore.query(BagProduct, (bp) =>
+        bp.userSub.eq(userData.attributes.sub)
+      ).then(setBagProducts);
+    } catch (error) {
+      console.warn("Error fetching bag products:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchBagProducts();
+  }, []);
 
 
   const handleImagePress = (index: number): void => {
@@ -43,13 +60,31 @@ const ProductDetail = () => {
       return;
     };
 
-    const newBagProduct = new BagProduct({
-      userSub: userData.attributes.sub,
-      quantity,
-      productID: product.id,
-    });
+    // Check if the product already exists in the cart
+    const existingBagProduct = bagProducts.find(bp => bp.productID === product.id)
+    
+    if (existingBagProduct) {
+      // If the product already exists, update the quantity
+      const updatedQuantity = existingBagProduct.quantity + 1;
 
-    await DataStore.save(newBagProduct)
+      // Create a new instace of BagProduct with the updated quantity
+      const updatedBagProduct = BagProduct.copyOf(existingBagProduct, (updated) => {
+        updated.userSub = userData.attributes.sub,
+        updated.quantity = updatedQuantity,
+        updated.productID = product.id
+      })
+
+      await DataStore.save(updatedBagProduct);
+    } else {
+        const newBagProduct = new BagProduct({
+          userSub: userData.attributes.sub,
+          quantity,
+          productID: product.id,
+        });
+
+        await DataStore.save(newBagProduct);
+      }
+
     router.push('tabs/cart')
   }
 

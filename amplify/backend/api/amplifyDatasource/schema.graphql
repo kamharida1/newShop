@@ -160,16 +160,16 @@ type BagProduct @model @auth(rules: [{allow: public}]) {
   userSub: String!
   quantity: Int!
   productID: ID
-  product: Product @hasOne(fields: ["productID"])
+  product: Product @belongsTo(fields: ["productID"])
 }
 
 type OrderProduct @model @auth(rules: [{allow: public}]) {
   id: ID!
   quantity: Int!
   productID: ID!
-  product: Product @hasOne(fields: ["productID"])
+  product: Product @belongsTo(fields: ["productID"])
   orderID: ID!
-  Order: Order @hasOne(fields: ["orderID"])
+  Order: Order @belongsTo(fields: ["orderID"])
 }
 
 type Order @model @auth(rules: [{allow: public}]) {
@@ -180,7 +180,7 @@ type Order @model @auth(rules: [{allow: public}]) {
   BillingAddress: BillingAddress @hasOne
   PaymentMethod: PaymentMethod @hasOne
   completed: Boolean
-  OrderProduct: OrderProduct @belongsTo
+  OrderProduct: OrderProduct @hasOne
 }
 
 type User @model @auth(rules: [{allow: public}]) {
@@ -225,7 +225,7 @@ type Product @model @auth(rules: [{allow: public}]) {
   shippingclassID: ID @index(name: "byShippingClass")
   ShippingClass: ShippingClass @belongsTo(fields: ["shippingclassID"])
   details: AWSJSON!
-  BagProduct: BagProduct @belongsTo
-  OrderProduct: OrderProduct @belongsTo
+  BagProduct: BagProduct @hasOne
+  OrderProduct: OrderProduct @hasOne
 }
  

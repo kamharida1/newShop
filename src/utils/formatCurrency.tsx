@@ -1,4 +1,4 @@
-export function formatCurrency(amount: {amount: number}) {
+export function formatCurrency(amount: number) {
   const currencySymbol = "\u20A6";
 
   // Remove any existing commas from the amount

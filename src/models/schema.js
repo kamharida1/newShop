@@ -1725,10 +1725,7 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
+                        "connectionType": "BELONGS_TO",
                         "targetNames": [
                             "productID"
                         ]
@@ -1809,10 +1806,7 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
+                        "connectionType": "BELONGS_TO",
                         "targetNames": [
                             "productID"
                         ]
@@ -1834,10 +1828,7 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "association": {
-                        "connectionType": "HAS_ONE",
-                        "associatedWith": [
-                            "id"
-                        ],
+                        "connectionType": "BELONGS_TO",
                         "targetNames": [
                             "orderID"
                         ]
@@ -1981,7 +1972,10 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "association": {
-                        "connectionType": "BELONGS_TO",
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": [
+                            "id"
+                        ],
                         "targetNames": [
                             "orderOrderProductId"
                         ]
@@ -2484,7 +2478,10 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "association": {
-                        "connectionType": "BELONGS_TO",
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": [
+                            "id"
+                        ],
                         "targetNames": [
                             "productBagProductId"
                         ]
@@ -2499,7 +2496,10 @@ export const schema = {
                     "isRequired": false,
                     "attributes": [],
                     "association": {
-                        "connectionType": "BELONGS_TO",
+                        "connectionType": "HAS_ONE",
+                        "associatedWith": [
+                            "id"
+                        ],
                         "targetNames": [
                             "productOrderProductId"
                         ]
@@ -2757,5 +2757,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "dcacc98a5a517c7e5d9465b38bbb8e43"
+    "version": "b3a4e20db8f0b0f3baeed07f5d18921b"
 };

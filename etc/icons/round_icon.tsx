@@ -16,8 +16,8 @@ const RoundIcon = ({
   size,
   color,
   backgroundColor,
-  iconRatio,
-  align,
+  iconRatio = 0.7,
+  align ='center',
 }: RoundIconProps) => {
   const iconSize = size * iconRatio;
 

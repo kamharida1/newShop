@@ -5,7 +5,7 @@ import { StyleProp, ViewStyle } from "react-native";
 
 interface RoundIconButtonProps extends RoundIconProps {
   onPress: () => void;
-  style: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>
 }
 
 const RoundIconButton = ({ onPress, style, ...props }: RoundIconButtonProps) => {

@@ -13,7 +13,7 @@ import {
 } from "@shopify/restyle";
 
 const palette = {
-  red: "rgb(255, 59, 48, 0.9)",
+  red: "rgb(255, 59, 48)",
   orange: "rgb(255,149, 0)",
   yellow: "rgb(255,204,0)",
   green: "rgb(52,199,89)",

@@ -9,8 +9,7 @@ import { Stack, useRouter } from "expo-router";
 import tw from 'twrnc'
 import AddressCard from "../../etc/cards/address_card";
 import { ScrollView } from "react-native-gesture-handler";
-import { Image, StyleSheet } from "react-native";
-import { PanGestureHandler } from "react-native-gesture-handler";
+import { StyleSheet } from "react-native";
 
 const PlaceholderImageSource = "https://picsum.photos/200/300";
 
