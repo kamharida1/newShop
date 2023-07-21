@@ -82,6 +82,13 @@ export const schema = {
                         ]
                     }
                 },
+                "isSelected": {
+                    "name": "isSelected",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -2757,5 +2764,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "b3a4e20db8f0b0f3baeed07f5d18921b"
+    "version": "81217f6a80e5c8f569715c5cfc82253d"
 };

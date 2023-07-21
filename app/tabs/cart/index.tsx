@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, ActivityIndicator, Button, Pressable } from "react-native";
-import GlassmorphicCard from "../../../etc/cards/glassmorphic";
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Button,
+  Pressable,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Stack, useRouter } from "expo-router";
 import { Screen } from "../../../etc/views/screen";
-import tw from 'twrnc'
+import tw from "twrnc";
 import { Text } from "moti";
 import BagProductItem from "../../../etc/cards/bag_product_item";
 import { BagProduct, Product } from "../../../src/models";
@@ -25,16 +30,8 @@ export default function Cart() {
       DataStore.query(BagProduct, (bp) =>
         bp.userSub.eq(userData.attributes.sub)
       ).then(setBagProducts);
-      // const products = await Promise.all(
-      //   bagProducts.map((bp) => DataStore.query(Product, bp.productID))
-      // );
-      // const bagItems = bagProducts.map((bp, index) => ({
-      //   ...bp,
-      //   product: products[index],
-      // }));
-      // setBagProducts(bagItems);
-     } catch(error) {
-        console.warn('Error fetching bag products:', error)
+    } catch (error) {
+      console.warn("Error fetching bag products:", error);
     }
   };
 
@@ -71,33 +68,35 @@ export default function Cart() {
   // }, [bagProducts]);
 
   useEffect(() => {
-    const subscription = DataStore.observe(BagProduct).subscribe(msg => fetchBagProducts(),);
+    const subscription = DataStore.observe(BagProduct).subscribe((msg) =>
+      fetchBagProducts()
+    );
     return subscription.unsubscribe;
   }, []);
 
   useEffect(() => {
-    const subscriptions = bagProducts.map(bp =>
-      DataStore.observe(BagProduct, bp.id).subscribe(msg => {
-        if (msg.opType === 'UPDATE') {
-          setBagProducts(curBagProducts =>
-            curBagProducts.map(bp => {
+    const subscriptions = bagProducts.map((bp) =>
+      DataStore.observe(BagProduct, bp.id).subscribe((msg) => {
+        if (msg.opType === "UPDATE") {
+          setBagProducts((curBagProducts) =>
+            curBagProducts.map((bp) => {
               if (bp.id !== msg.element.id) {
-                console.log('different id');
+                console.log("different id");
                 return bp;
               }
               return {
                 ...bp,
                 ...msg.element,
-              }
+              };
             })
-          )
+          );
         }
       })
     );
 
     return () => {
-      subscriptions.forEach(sub => sub.unsubscribe());
-    }
+      subscriptions.forEach((sub) => sub.unsubscribe());
+    };
   }, []);
 
   useEffect(() => {
@@ -120,7 +119,7 @@ export default function Cart() {
   }, [bagProducts]);
 
   const onCheckout = () => {
-    router.push({ pathname: 'order/add_address', params: { totalPrice } });
+    router.push({ pathname: "order/addresses", params: { totalPrice } });
   };
 
   if (bagProducts.filter((bp) => !bp.product).length !== 0) {

@@ -13,6 +13,9 @@ import {
   defaultDarkModeOverride,
 } from "@aws-amplify/ui-react-native";
 import { PaperProvider } from "react-native-paper";
+import { Provider } from "react-redux";
+
+import store from "../src/redux/store";
 
 
 DataStore.configure({
@@ -27,35 +30,37 @@ export const unstable_settings = {
 export default function RootLayout() {
   return (
     <AmplifyProvider>
-      <Authenticator.Provider>
-        <RootSiblingParent>
-          <ThemeProvider>
-            <Authenticator
-              Container={(props) => (
-                // reuse default `Container` and apply custom background
-                <Authenticator.Container
-                  {...props}
-                  //style={{ backgroundColor: "pink" }}
-                />
-              )}
-              //components={{SignIn: Login}}
-            >
-              <PaperProvider>
-                <SafeAreaProvider>
-                  <Stack screenOptions={{ headerShown: false }}>
-                    <Stack.Screen
-                      name="index"
-                      options={{
-                        title: "Welcome",
-                      }}
-                    />
-                  </Stack>
-                </SafeAreaProvider>
-              </PaperProvider>
-            </Authenticator>
-          </ThemeProvider>
-        </RootSiblingParent>
-      </Authenticator.Provider>
+      <Provider store={store}>
+        <Authenticator.Provider>
+          <RootSiblingParent>
+            <ThemeProvider>
+              <Authenticator
+                Container={(props) => (
+                  // reuse default `Container` and apply custom background
+                  <Authenticator.Container
+                    {...props}
+                    //style={{ backgroundColor: "pink" }}
+                  />
+                )}
+                //components={{SignIn: Login}}
+              >
+                <PaperProvider>
+                  <SafeAreaProvider>
+                    <Stack screenOptions={{ headerShown: false }}>
+                      <Stack.Screen
+                        name="index"
+                        options={{
+                          title: "Welcome",
+                        }}
+                      />
+                    </Stack>
+                  </SafeAreaProvider>
+                </PaperProvider>
+              </Authenticator>
+            </ThemeProvider>
+          </RootSiblingParent>
+        </Authenticator.Provider>
+      </Provider>
     </AmplifyProvider>
   );
 }

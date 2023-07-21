@@ -1,17 +1,24 @@
 import { DataStore } from "aws-amplify";
 import { Link, Stack } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, Image, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { Product } from "../../../src/models";
 import { SafeAreaView } from "react-native-safe-area-context";
-import tw from 'twrnc'
+import tw from "twrnc";
 import { formatCurrency } from "../../../src/utils";
 
 const Products = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
-    DataStore.query(Product).then(setProducts)
+    DataStore.query(Product).then(setProducts);
   }, []);
 
   const renderItem = ({ item }: { item: any }) => (
@@ -34,9 +41,11 @@ const Products = () => {
 
   return (
     <View style={tw`flex-1`}>
-      <Stack.Screen options={{
-        title: "Home",
-      }} />
+      <Stack.Screen
+        options={{
+          title: "Home",
+        }}
+      />
       <>
         <FlatList
           contentInsetAdjustmentBehavior="automatic"
@@ -56,6 +65,4 @@ const Products = () => {
 
 export default Products;
 
-const styles = StyleSheet.create({
- 
-});
+const styles = StyleSheet.create({});

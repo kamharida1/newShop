@@ -45,6 +45,7 @@ type EagerPaymentMethod = {
   readonly userID: string;
   readonly User?: User | null;
   readonly Order?: Order | null;
+  readonly isSelected?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly paymentMethodOrderId?: string | null;
@@ -64,6 +65,7 @@ type LazyPaymentMethod = {
   readonly userID: string;
   readonly User: AsyncItem<User | undefined>;
   readonly Order: AsyncItem<Order | undefined>;
+  readonly isSelected?: boolean | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
   readonly paymentMethodOrderId?: string | null;

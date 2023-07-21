@@ -34,13 +34,14 @@ const TextInput = forwardRef<RNTextInput, TextInputProps>(
     const SIZE = theme.borderRadii.m * 2; // 10 x 2 = 20
     const color = !touched ? "mainForeground" : error ? "danger" : "success";
     const themeColor = theme.colors[color];
+    const borderWidth = touched ? 2 : 1
 
     return (
       <Box
         flexDirection="row"
         alignItems="center"
-        height={48}
-        borderWidth={StyleSheet.hairlineWidth}
+        height={55}
+        borderWidth={borderWidth}
         borderColor={color}
         padding="s"
         borderRadius="s"

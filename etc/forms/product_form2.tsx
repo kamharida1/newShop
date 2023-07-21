@@ -10,7 +10,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { Image, Text, View } from "@bacons/react-views";
 import { Alert, Button as NativeButton } from "react-native";
-import tw from 'twrnc'
+import tw from "twrnc";
 
 import DropdownComponent from "./dropdown";
 import { Box } from "../_Theme";
@@ -20,7 +20,6 @@ import TextInput from "./text_input";
 import { Button } from "../buttons/button";
 import { useDataStore } from "../../src/hooks/useDataStoreUpdate";
 import { useRouter } from "expo-router";
-
 
 interface ProductFormT {
   optionTypes: OptionType[];
@@ -61,12 +60,12 @@ const ProductForm2: FC<ProductFormT> = ({
   const [producttypeID, setProducttypeID] = useState("");
 
   const { data, create } = useDataStore(Product);
-  
+
   const [selectedValues, setSelectedValues] = useState({});
 
   const router = useRouter();
 
-  const handleCreateProduct = async() => {
+  const handleCreateProduct = async () => {
     const product = {
       name,
       count,
@@ -82,7 +81,7 @@ const ProductForm2: FC<ProductFormT> = ({
     };
     await create(product);
     router.back();
-  }
+  };
 
   useEffect(() => {
     //console.warn(catList);
@@ -124,7 +123,7 @@ const ProductForm2: FC<ProductFormT> = ({
   };
 
   const handleDropdownValueChange = (value, label) => {
-    if (!value) return
+    if (!value) return;
     setSelectedValues((previousValues) => ({
       ...previousValues,
       [label]: value,
@@ -134,9 +133,9 @@ const ProductForm2: FC<ProductFormT> = ({
   const handleInputNumberChange = (text, setValue) => {
     const parsedValue = parseFloat(text);
     if (!isNaN(parsedValue)) {
-      setValue(parsedValue)
+      setValue(parsedValue);
     }
-  }
+  };
 
   const pickImages = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -146,7 +145,7 @@ const ProductForm2: FC<ProductFormT> = ({
     });
 
     if (!result.canceled) {
-      setImages(result.assets.map(({ uri })=> uri));
+      setImages(result.assets.map(({ uri }) => uri));
     } else {
       Alert.alert("You did not select any image.");
     }
@@ -195,7 +194,10 @@ const ProductForm2: FC<ProductFormT> = ({
             value={subcategoryID}
             isFocus={isFocus}
             setIsFocus={setIsFocus}
-            setValue={(value: string) => { setSubCategoryID(value); handleSubCategoryChange(value); }}
+            setValue={(value: string) => {
+              setSubCategoryID(value);
+              handleSubCategoryChange(value);
+            }}
             data={subList}
           />
         </Box>

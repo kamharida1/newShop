@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3openshopstorage94528cbf",
+  "bucketName": "openshop-storage-94528cbf",
+  "policyUUID": "63d7f8d0",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}

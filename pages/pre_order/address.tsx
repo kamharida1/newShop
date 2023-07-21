@@ -8,39 +8,41 @@ import tw from 'twrnc'
 
 const { width } = Dimensions.get("window");
 
-const Address = ({ getInfo }) => {
+const Address = ({ getInfo, }) => {
   const [selectedTown, setSelectedTown] = useState("");
   const [selectedProvince, setSelectedProvince] = useState("");
   const initialTown = [{ label: "Enugu", value: "1" }];
   const [getTowns, setGetTowns] = useState(initialTown);
 
-  // Filter Cities
-  const townsFilter = useCallback((name) => {
-    if (name === "1") {
-      setSelectedTown("");
-    } else {
-      const towns = ProvincesData.filter(
-        (province) => province.name === name
-      );
-      const town = towns.map((town) => {
-        const result = Object.keys(town.cities).map((key) => {
-          return town.cities[key];
-        });
-        const townsFilter = result.map((town) => {
-          return { label: town, value: town };
-        });
-        return townsFilter;
-      });
-      setSelectedProvince(name);
-      setGetTowns(town[0])
-    }
-  }, [selectedProvince]
-  );
-
   // get Address
   useEffect(() => {
     getInfo(selectedProvince, selectedTown);
   }, [selectedProvince, selectedTown]);
+
+  // Filter Cities
+  const townsFilter = useCallback(
+    (name) => {
+      if (name === "1") {
+        setSelectedTown("");
+      } else {
+        const towns = ProvincesData.filter(
+          (province) => province.name === name
+        );
+        const town = towns.map((town) => {
+          const result = Object.keys(town.cities).map((key) => {
+            return town.cities[key];
+          });
+          const townsFilter = result.map((town) => {
+            return { label: town, value: town };
+          });
+          return townsFilter;
+        });
+        setSelectedProvince(name);
+        setGetTowns(town[0]);
+      }
+    },
+    [selectedProvince]
+  );
 
   const showIconPlatform =
     Platform.OS === "android" ? (

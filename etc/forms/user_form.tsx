@@ -1,19 +1,19 @@
-import { Alert, StyleSheet, Text, View } from 'react-native'
-import React, { useEffect, useReducer, useState } from 'react'
-import { useFormik } from 'formik'
-import Address from './address';
+import { Alert, StyleSheet, Text, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { useFormik } from "formik";
+import Address from "../../pages/pre_order/address";
 
-import tw from 'twrnc';
+import tw from "twrnc";
 import * as Yup from "yup";
-import Button from '../../etc/buttons/soft_button'
-import TextInput from '../../etc/forms/text_input';
-import { Screen } from '../../etc/views/screen';
-import { ActivityIndicator } from 'react-native-paper';
-import { Box } from '../../etc/_Theme';
-import { ShippingAddress, User } from '../../src/models';
-import { addAddress, fetchRequest, initialState, reducer } from './reducer';
-import { DataStore } from 'aws-amplify';
-import { useRouter } from 'expo-router';
+import Button from "../buttons/soft_button";
+import TextInput from "./text_input";
+import { Screen } from "../views/screen";
+import { ActivityIndicator } from "react-native-paper";
+import { Box } from "../_Theme";
+import { ShippingAddress, User } from "../../src/models";
+import { DataStore } from "aws-amplify";
+import { useRouter } from "expo-router";
+import FlyInput from "./fly_input";
 
 const AddressSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -36,35 +36,22 @@ const AddressSchema = Yup.object().shape({
     .required("Address is required.")
     .min(4, "Too Short")
     .max(100, "Too Long"),
-  subAddress: Yup.string()
-    .min(2, "Too Short")
-    .max(100, "Too Long"),
+  subAddress: Yup.string().min(2, "Too Short").max(100, "Too Long"),
 });
 
-const UserForm = ({user}) => {
+const UserForm = ({ user, myAddress, mode }) => {
   const [province, setProvince] = useState("");
   const [town, setTown] = useState("");
-  const [userAddress, setUserAddress] = useState({
+  const [loading, setLoading] = useState(false);
+
+  const initialValues = myAddress || {
     firstName: "",
     lastName: "",
     email: "",
     phone: "",
     address: "",
     subAddress: "",
-  });
-  const [state, dispatch] = useReducer(reducer, initialState)
-  const {addresses, loading, error} = state
-
-  // useEffect(() => {
-  //   const timeout = setTimeout(() => {
-  //     setLoading(false); // Set loading to false after the timeout duration
-  //     // Perform any other actions you need after the timeout
-  //   }, 2000);
-
-  //   return () => {
-  //     clearTimeout(timeout); // Clear the timeout if the component unmounts or changes
-  //   };
-  // }, []);
+  };
 
   const getInfo = (province, town) => {
     setProvince(province);
@@ -75,15 +62,33 @@ const UserForm = ({user}) => {
 
   const submitAddress = async (values, { resetForm }) => {
     try {
-      const newAddress = { ...values, userID: user.id, city: town, state: province };
-      await DataStore.save(new ShippingAddress(newAddress));
-      dispatch(addAddress(newAddress))
-      resetForm();
-      router.back()
+      if (myAddress) {
+        const original = await DataStore.query(ShippingAddress, myAddress.id);
+        const updated = ShippingAddress.copyOf(original, (updated) => {
+          updated.firstName = values.firstName;
+          updated.lastName = values.lastName;
+          updated.email = values.email;
+          updated.phone = values.phone;
+          updated.address = values.address;
+          updated.subAddress = values.subAddress;
+          updated.city = values.city;
+          updated.state = values.state;
+        });
+        await DataStore.save(updated);
+      } else {
+        const newAddress = {
+          ...values,
+          userID: user.id,
+          city: town,
+          state: province,
+        };
+        await DataStore.save(new ShippingAddress(newAddress));
+        router.back();
+      }
     } catch (error) {
-      console.warn('Error saving shipping address:', error)
+      console.warn("Error saving shipping address:", error);
     }
-  }
+  };
 
   const {
     handleChange,
@@ -92,33 +97,31 @@ const UserForm = ({user}) => {
     values,
     errors,
     touched,
-    setFieldValue,
+    setValues,
   } = useFormik({
     validationSchema: AddressSchema,
-    initialValues: userAddress,
-    onSubmit: submitAddress
+    initialValues,
+    onSubmit: submitAddress,
   });
+
+  // Update form values when myAddress prop changes
+  useEffect(() => {
+    setValues(myAddress || initialValues);
+  }, [myAddress]);
 
   return (
     <Screen style={tw``}>
       {loading ? (
-        <View style={tw`flex-1 items-center justify-center`}>
+        <View className="flex-1 items-center justify-center">
           <ActivityIndicator animating color="black" />
         </View>
       ) : (
         <>
-          <Box mb="l">
-            <TextInput
-              value={values.firstName}
-              placeholder="First Name"
-              onChangeText={handleChange("firstName")}
-              onBlur={handleBlur("firstName")}
-              error={errors.firstName}
-              touched={touched.firstName}
-              returnKeyType="next"
-              returnKeyLabel="next"
-            />
-          </Box>
+          <FlyInput
+            value={values.firstName}
+            label="First Name"
+            placeholder="first Name"
+          />
           <Box mb="l">
             <TextInput
               value={values.lastName}
@@ -196,8 +199,8 @@ const UserForm = ({user}) => {
       )}
     </Screen>
   );
-}
+};
 
-export default UserForm
+export default UserForm;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

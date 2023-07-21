@@ -4,7 +4,8 @@ import { useRouter } from "expo-router";
 
 export function useDataStore(model: any, initialData = []) {
   const [data, setData] = useState(initialData);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null)
 
   const router = useRouter();
 
@@ -53,15 +54,22 @@ export function useDataStore(model: any, initialData = []) {
   }
 
   useEffect(() => {
-    setLoading(true)
-    read();
-    setLoading(false)
+    try {
+      setLoading(true);
+      read();
+      setLoading(false)
+    } catch(error) {
+      console.error("Error fetching items:", error);
+    }
+    // setLoading(true)
+    // read();
+    // setLoading(false)
     //saveItems();
     const subscription = DataStore.observe(model).subscribe(() => read());
     return () => subscription.unsubscribe();
   }, []);
 
-  return { data, loading, create, read, update, remove, navigateToUpdate };
+  return { data, loading, error, create, read, update, remove, navigateToUpdate };
 }
 
 // import React from "react";

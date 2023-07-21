@@ -1,12 +1,12 @@
 import { Stack, useRouter, useSearchParams } from "expo-router";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, StyleSheet, Text, View } from "react-native";
 import { Product, BagProduct } from "../../../src/models";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Screen } from "../../../etc/views/screen";
 import ImageCarousel from "../../../etc/cards/image_carousel";
 import { Box } from "../../../etc/_Theme";
-import tw from 'twrnc'
+import tw from "twrnc";
 import ImageModal from "../../../etc/modals/image_modal";
 import { Auth, DataStore } from "aws-amplify";
 import { BlurView } from "expo-blur";
@@ -27,9 +27,9 @@ const ProductDetail = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!id) return
+    if (!id) return;
     DataStore.query(Product, id).then(setProduct);
-    setIsLoading(false)
+    setIsLoading(false);
   }, [id]);
 
   const fetchBagProducts = async () => {
@@ -47,7 +47,6 @@ const ProductDetail = () => {
     fetchBagProducts();
   }, []);
 
-
   const handleImagePress = (index: number): void => {
     setIsImageModalVisible(!isImageModalVisible);
     setActiveIndex(index);
@@ -56,42 +55,45 @@ const ProductDetail = () => {
   const onAddToBag = async () => {
     const userData = await Auth.currentAuthenticatedUser();
 
-    if (!product || !userData ) {
+    if (!product || !userData) {
       return;
-    };
+    }
 
     // Check if the product already exists in the cart
-    const existingBagProduct = bagProducts.find(bp => bp.productID === product.id)
-    
+    const existingBagProduct = bagProducts.find(
+      (bp) => bp.productID === product.id
+    );
+
     if (existingBagProduct) {
       // If the product already exists, update the quantity
       const updatedQuantity = existingBagProduct.quantity + 1;
 
       // Create a new instace of BagProduct with the updated quantity
-      const updatedBagProduct = BagProduct.copyOf(existingBagProduct, (updated) => {
-        updated.userSub = userData.attributes.sub,
-        updated.quantity = updatedQuantity,
-        updated.productID = product.id
-      })
+      const updatedBagProduct = BagProduct.copyOf(
+        existingBagProduct,
+        (updated) => {
+          (updated.userSub = userData.attributes.sub),
+            (updated.quantity = updatedQuantity),
+            (updated.productID = product.id);
+        }
+      );
 
       await DataStore.save(updatedBagProduct);
     } else {
-        const newBagProduct = new BagProduct({
-          userSub: userData.attributes.sub,
-          quantity,
-          productID: product.id,
-        });
+      const newBagProduct = new BagProduct({
+        userSub: userData.attributes.sub,
+        quantity,
+        productID: product.id,
+      });
 
-        await DataStore.save(newBagProduct);
-      }
+      await DataStore.save(newBagProduct);
+    }
 
-    router.push('tabs/cart')
-  }
+    router.push("tabs/cart");
+  };
 
   if (isLoading && !product) {
-    return (
-        <Text>Loading...</Text>
-    );
+    return <Text>Loading...</Text>;
   }
 
   return (
@@ -147,7 +149,7 @@ const styles = StyleSheet.create({
     // flex:1,
     width: "100%",
     height: 250,
-    zIndex: 1
+    zIndex: 1,
   },
   blur: {
     ...StyleSheet.absoluteFillObject,
