@@ -7,11 +7,12 @@ import React, { forwardRef } from "react";
 import { useTheme, Box } from "../_Theme";
 import { RoundIcon } from "../icons/round_icon";
 import { Feather as Icon } from "@expo/vector-icons";
+import {FormikErrors, FormikTouched} from 'formik'
 
 interface TextInputProps extends RNTextInputProps {
   icon?: string;
-  error?: string;
-  touched?: boolean;
+  error?: string | FormikErrors<any>;
+  touched?: boolean | FormikTouched<any>;
   isPassword?: boolean;
   hidePassword?: boolean;
   setHidePassword?: () => void;
@@ -30,6 +31,7 @@ const TextInput = forwardRef<RNTextInput, TextInputProps>(
     },
     ref
   ) => {
+    
     const theme = useTheme();
     const SIZE = theme.borderRadii.m * 2; // 10 x 2 = 20
     const color = !touched ? "mainForeground" : error ? "danger" : "success";

@@ -32,7 +32,9 @@ export default function AddAddress() {
     undefined
   );
 
-  const { data, remove, navigateToUpdate } = useDataStore(ShippingAddress);
+  const { id, mode } = useSearchParams();
+
+  const { data } = useDataStore(ShippingAddress);
 
   useEffect(() => {
     const myAddress = data.find((addr) => addr.id === id);
@@ -50,9 +52,6 @@ export default function AddAddress() {
     fetchUser();
   });
 
-  const { id, mode } = useSearchParams();
-
-  const router = useRouter();
 
   return (
     <View style={{ flex: 1 }}>

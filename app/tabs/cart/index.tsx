@@ -119,7 +119,7 @@ export default function Cart() {
   }, [bagProducts]);
 
   const onCheckout = () => {
-    router.push({ pathname: "order/addresses", params: { totalPrice } });
+    router.push({ pathname: "order/checkout", params: { totalPrice } });
   };
 
   if (bagProducts.filter((bp) => !bp.product).length !== 0) {

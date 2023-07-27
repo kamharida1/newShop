@@ -17,6 +17,9 @@
       },
       "api": {
         "amplifyDatasource": {}
+      },
+      "storage": {
+        "s3openshopstorage94528cbf": {}
       }
     }
   }

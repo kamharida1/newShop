@@ -39,7 +39,7 @@ const AddressSchema = Yup.object().shape({
   subAddress: Yup.string().min(2, "Too Short").max(100, "Too Long"),
 });
 
-const UserForm = ({ user, myAddress, mode }) => {
+const UserForm = ({ user, myAddress,}) => {
   const [province, setProvince] = useState("");
   const [town, setTown] = useState("");
   const [loading, setLoading] = useState(false);
@@ -51,6 +51,7 @@ const UserForm = ({ user, myAddress, mode }) => {
     phone: "",
     address: "",
     subAddress: "",
+    isSelected: false,
   };
 
   const getInfo = (province, town) => {
@@ -117,11 +118,18 @@ const UserForm = ({ user, myAddress, mode }) => {
         </View>
       ) : (
         <>
-          <FlyInput
-            value={values.firstName}
-            label="First Name"
-            placeholder="first Name"
-          />
+          <Box mb="l">
+            <TextInput
+              value={values.firstName}
+              placeholder="First Name"
+              onChangeText={handleChange("firstName")}
+              onBlur={handleBlur("firstName")}
+              error={errors.firstName}
+              touched={touched.firstName}
+              returnKeyType="next"
+              returnKeyLabel="next"
+            />
+          </Box>
           <Box mb="l">
             <TextInput
               value={values.lastName}

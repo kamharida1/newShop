@@ -34,7 +34,7 @@ export const schema = {
                 "expirationDate": {
                     "name": "expirationDate",
                     "isArray": false,
-                    "type": "AWSDate",
+                    "type": "String",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -2764,5 +2764,5 @@ export const schema = {
         }
     },
     "codegenVersion": "3.4.4",
-    "version": "81217f6a80e5c8f569715c5cfc82253d"
+    "version": "449416c45b79397dce57865779243321"
 };

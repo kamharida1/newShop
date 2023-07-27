@@ -1,31 +1,42 @@
 import { useEffect, useReducer, useState } from "react";
-import { fetchSuccess, fetchRequest, initialState, reducer, fetchFail } from "../../pages/pre_order/reducer";
+import {
+  fetchSuccess,
+  fetchRequest,
+  initialState,
+  reducer,
+  fetchFail,
+} from "../../pages/pre_order/reducer";
 import { Auth, DataStore } from "aws-amplify";
 import { ShippingAddress, User } from "../../src/models";
 
-import Animated, { Extrapolate, interpolate, useAnimatedScrollHandler, useAnimatedStyle, useSharedValue} from 'react-native-reanimated'
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedScrollHandler,
+  useAnimatedStyle,
+  useSharedValue,
+} from "react-native-reanimated";
 import { Text, View } from "moti";
 import { Stack, useRouter } from "expo-router";
-import tw from 'twrnc'
+import tw from "twrnc";
 import AddressCard from "../../etc/cards/address_card";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import AddressCard2 from "../../etc/cards/address_card_2";
 import { useDataStore } from "../../src/hooks/useDataStoreUpdate";
+import SoftButton from "../../etc/buttons/soft_button";
 
 const PlaceholderImageSource = "https://picsum.photos/200/300";
 
-
 export default function AddressList() {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('')
+  const [error, setError] = useState("");
   const [user, setUser] = useState(null);
-  const [addresses, setAddresses] = useState<ShippingAddress[] | null>([])
+  const [addresses, setAddresses] = useState<ShippingAddress[] | null>([]);
   const translationY = useSharedValue(0);
 
   const router = useRouter();
 
   const { navigateToUpdate } = useDataStore(ShippingAddress);
-
 
   const fetchUser = async () => {
     try {
@@ -69,18 +80,14 @@ export default function AddressList() {
 
   const scrollHandler = useAnimatedScrollHandler((event) => {
     console.log(event.contentOffset.y);
-     translationY.value = event.contentOffset.y;
+    translationY.value = event.contentOffset.y;
   });
 
   const stylez = useAnimatedStyle(() => {
     return {
       transform: [
         {
-          translateY: interpolate(
-            translationY.value,
-            [-143, 0],
-            [0, -49]
-          ),
+          translateY: interpolate(translationY.value, [-143, 0], [0, -49]),
         },
         {
           scale: interpolate(
@@ -96,12 +103,8 @@ export default function AddressList() {
 
   const opacity = useAnimatedStyle(() => {
     return {
-      opacity: interpolate(
-        translationY.value,
-        [-143, -49],
-        [1, 0]
-      )
-    }
+      opacity: interpolate(translationY.value, [-143, -49], [1, 0]),
+    };
   });
 
   const selectAddress = async (address: ShippingAddress) => {
@@ -109,9 +112,9 @@ export default function AddressList() {
     const updated = ShippingAddress.copyOf(original, (updated) => {
       updated.selected = true;
     });
-    await DataStore.save(updated)
-  }
-  
+    await DataStore.save(updated);
+  };
+
   return (
     <View style={tw`flex-1 `}>
       <Stack.Screen options={{ title: "Address" }} />
@@ -148,7 +151,15 @@ export default function AddressList() {
                     address={address}
                     onPress={() => selectAddress(address)}
                     isSelected={address.selected}
-                    editPressHandler={() => navigateToUpdate(address, "/order/add_address", "update")}
+                    editPressHandler={() =>
+                      navigateToUpdate(address, "/order/add_address", "update")
+                    }
+                  />
+                  <SoftButton
+                    onPress={() => router.push("order/payment_methods")}
+                    title="Go to payment"
+                    buttonStyle={tw`my-2 mx-2 self-center items-center justify-center py-3 bg-yellow-900 rounded-md w-70`}
+                    textStyle={tw`text-base text-zinc-200 font-semibold`}
                   />
                 </View>
               ))
@@ -176,7 +187,6 @@ export default function AddressList() {
       </Animated.ScrollView>
     </View>
   );
-
 }
 
 const styles = StyleSheet.create({
@@ -187,6 +197,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   text: {
-    fontSize: 24
-  }
+    fontSize: 24,
+  },
 });

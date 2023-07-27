@@ -12,7 +12,7 @@ interface DetailsT {
   handleDropdownFocus: (index: number) => void;
   handleDropdownBlur: (index: number) => void;
   handleDropdownValueChange: (value: string, label: string) => void;
-  selectedValues: any
+  selectedValues: any;
 }
 
 export default function DetailsForm(props: DetailsT) {
@@ -45,7 +45,12 @@ export default function DetailsForm(props: DetailsT) {
           <TextInput
             placeholder={`${opt.name}`}
             value={selectedValues[opt.name] || ""}
-            onChangeText={(value) => handleDropdownValueChange(value, opt.name)}
+            onChangeText={(value) =>
+              handleDropdownValueChange(
+                `${isNaN(+value) ? value : +value}`,
+                opt.name
+              )
+            }
           />
         </Box>
       );
